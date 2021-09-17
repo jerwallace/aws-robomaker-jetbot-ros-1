@@ -1,0 +1,40 @@
+version: "3"
+services: 
+
+  dance_demo:
+    build: 
+        context: ./
+    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+ 
+  jetbot_base:
+    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    command: ros2 launch jetbot_bringup bringup.launch.py
+    devices:
+      - "/dev/i2c-1:/dev/i2c-1"
+      - "/dev/video0:/dev/video0"
+    volumes:
+      - /tmp/argus_socket:/tmp/argus_socket
+    environment:
+      - DEFAULT_SPEED=0.3
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - CAMERA=false
+      - ROS_DOMAIN_ID=0
+      - WLAN0_IP="192.168.0.179"
+      - ETH0_IP="192.168.0.179"
+  
+  dance:
+    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    command: ros2 launch jetbot_move dance.launch.py
+    
+  greengrass_bridge:
+    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    command: ros2 launch greengrass_bridge greengrass_bridge.launch.py ros_topics:="['chatter']" iot_topics:="['/cloud_chatter', '/dance/start', '/dance/demo']"
+    environment:
+      - AWS_REGION
+      - SVCUID
+      - AWS_GG_NUCLEUS_DOMAIN_SOCKET_FILEPATH_FOR_COMPONENT
+      - AWS_CONTAINER_AUTHORIZATION_TOKEN
+      - AWS_CONTAINER_CREDENTIALS_FULL_URI
+    volumes: 
+      - "/greengrass/v2/ipc.socket:/greengrass/v2/ipc.socket"

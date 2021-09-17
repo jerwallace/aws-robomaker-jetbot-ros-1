@@ -1,0 +1,35 @@
+---
+RecipeFormatVersion: '2020-01-25'
+ComponentName: com.example.ros2.jetbot
+ComponentVersion: '1.0.16'
+ComponentDescription: 'The ROS2 JetBot Application'
+ComponentPublisher: Amazon
+ComponentDependencies:
+  aws.greengrass.DockerApplicationManager:
+    VersionRequirement: ">=2.0.0 <2.1.0"
+  aws.greengrass.TokenExchangeService:
+    VersionRequirement: ">=2.0.0 <2.1.0"
+ComponentConfiguration:
+  DefaultConfiguration:
+    accessControl:
+      aws.greengrass.ipc.mqttproxy:
+        com.example.PubSubPublisher:pubsub:1:
+          policyDescription: "Allows access to publish and subscribe to MQTT topics."
+          operations:
+          - "aws.greengrass#PublishToIoTCore"
+          - "aws.greengrass#SubscribeToIoTCore"
+          resources:
+          - "/chatter"
+          - "/cloud_chatter"
+          - "/dance/demo"
+          - "/dance/start"
+Manifests:
+  - Platform:
+      os: all
+    Lifecycle:
+        Run: |
+           docker-compose -f {artifacts:path}/docker-compose.yaml up
+           
+    Artifacts:
+      - URI: "docker:<ECR_REPOSITORY_ID>"
+      - URI: "s3://<S3_BUCKET>/com.example.ros2.jetbot/latest/artifacts/docker-compose.yaml"
