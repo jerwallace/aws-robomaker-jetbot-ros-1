@@ -4,10 +4,10 @@ services:
   dance_demo:
     build: 
         context: ./
-    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    image: <ACCOUNT>.dkr.ecr.<REGION>.amazonaws.com/ros-dance-demo:latest
  
   jetbot_base:
-    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    image: <ACCOUNT>.dkr.ecr.<REGION>.amazonaws.com/ros-dance-demo:latest
     command: ros2 launch jetbot_bringup bringup.launch.py
     devices:
       - "/dev/i2c-1:/dev/i2c-1"
@@ -24,11 +24,11 @@ services:
       - ETH0_IP="192.168.0.179"
   
   dance:
-    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    image: <ACCOUNT>.dkr.ecr.<REGION>.amazonaws.com/ros-dance-demo:latest
     command: ros2 launch jetbot_move dance.launch.py
     
   greengrass_bridge:
-    image: 593875212637.dkr.ecr.us-west-2.amazonaws.com/ros-dance-demo:latest
+    image: <ACCOUNT>.dkr.ecr.<REGION>.amazonaws.com/ros-dance-demo:latest
     command: ros2 launch greengrass_bridge greengrass_bridge.launch.py ros_topics:="['chatter']" iot_topics:="['/cloud_chatter', '/dance/start', '/dance/demo']"
     environment:
       - AWS_REGION
