@@ -42,13 +42,8 @@ def generate_launch_description():
             description='Prefix for node names'),
         
         Node(
-             package='jetbot_base', executable='jetbot_motor_controller', output='screen',
-             parameters=[
-                {"default_speed": DEFAULT_SPEED},
-                {"i2c_bus": I2C_BUS},
-                {"max_pwm": MAX_PWM}
-             ],
-             name=[LaunchConfiguration('node_prefix'), 'jetbot_motor_controller']),
+             package='jetbot_base', executable='motors_waveshare', output='screen',
+             name=[LaunchConfiguration('node_prefix'), 'motors_waveshare']),
         Node(
              package='jetbot_base', executable='jetbot_oled_display', output='screen',
              parameters=[

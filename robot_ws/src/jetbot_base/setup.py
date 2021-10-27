@@ -35,6 +35,7 @@ setup(
     entry_points={
         'console_scripts': [
             'jetbot_motor_controller = jetbot_base.jetbot_motor_controller:main',
+            'motors_waveshare = jetbot_base.motors_waveshare:main',
             'jetbot_camera = jetbot_base.jetbot_camera:main',
             'jetbot_oled_display = jetbot_base.jetbot_oled_display:main'
         ],
