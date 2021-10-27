@@ -15,10 +15,10 @@ class MotorController(Node):
     """
     Abstract motor controller base node for supporting different JetBots.
     Can be extended to support any diff drive by overriding set_speed(),
-    or any node that subscribes to the /jetbot/cmd_vel Twist message.
+    or any node that subscribes to the cmd_vel Twist message.
     """
     def __init__(self):
-        super().__init__('motors', namespace='jetbot')
+        super().__init__('motors')
         
         self.sub = self.create_subscription(Twist, 'cmd_vel', self.twist_listener, 10)
         
