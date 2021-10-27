@@ -41,17 +41,17 @@ class JetBotMotorController(Node):
         y = msg.angular.z/10
 		 
         if x>0 and y<0: #backward right
-            self.set_speed(self.motor_left_ID, (abs(y)+0.1))
-            self.set_speed(self.motor_right_ID, (0.2+y+0.1))
+            self.set_pwm(self.motor_left_ID, (abs(y)+0.1))
+            self.set_pwm(self.motor_right_ID, (0.2+y+0.1))
         elif x>0 and y>0: #backward left
-            self.set_speed(self.motor_left_ID, (0.2-y+0.1))
-            self.set_speed(self.motor_right_ID, (y+0.1))
+            self.set_pwm(self.motor_left_ID, (0.2-y+0.1))
+            self.set_pwm(self.motor_right_ID, (y+0.1))
         elif x<0 and y>0: #forward left
-            self.set_speed(self.motor_left_ID, (-(0.2-y)-0.1))
-            self.set_speed(self.motor_right_ID, -(y+0.1))
+            self.set_pwm(self.motor_left_ID, (-(0.2-y)-0.1))
+            self.set_pwm(self.motor_right_ID, -(y+0.1))
         elif x<0 and y<0: #forward right
-            self.set_speed(self.motor_left_ID, y-0.1)
-            self.set_speed(self.motor_right_ID, (-(0.2+y)-0.1))
+            self.set_pwm(self.motor_left_ID, y-0.1)
+            self.set_pwm(self.motor_right_ID, (-(0.2+y)-0.1))
         else:
             self.all_stop()
         
