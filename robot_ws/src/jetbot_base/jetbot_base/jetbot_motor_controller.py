@@ -37,27 +37,21 @@ class JetBotMotorController(Node):
     
     # velocity, twist commands (Twist)
     def on_cmd_vel(self, msg):
-
-        LIN_FACTOR = 30
-        ANG_FACTOR = 15
-
-        lin_vel = msg.linear.x / LIN_FACTOR
-        ang_vel = msg.angular.z / ANG_FACTOR
-
-        wheel_speed_l = (2*vel-wheelbase*yaw_rate) / (2*wheel_radius)
-        wheel_speed_r = (2*vel+wheelbase*yaw_rate) / (2*wheel_radius)
+        x = msg.linear.x
+        y = msg.angular.z/10
+		 
         if x>0 and y<0: #backward right
-            self.set_pwm(self.motor_left_ID, (abs(y)+0.1))
-            self.set_pwm(self.motor_right_ID, (0.2+y+0.1))
+            self.set_speed(self.motor_left_ID, (abs(y)+0.1))
+            self.set_speed(self.motor_right_ID, (0.2+y+0.1))
         elif x>0 and y>0: #backward left
-            self.set_pwm(self.motor_left_ID, (0.2-y+0.1))
-            self.set_pwm(self.motor_right_ID, (y+0.1))
+            self.set_speed(self.motor_left_ID, (0.2-y+0.1))
+            self.set_speed(self.motor_right_ID, (y+0.1))
         elif x<0 and y>0: #forward left
-            self.set_pwm(self.motor_left_ID, (-(0.2-y)-0.1))
-            self.set_pwm(self.motor_right_ID, -(y+0.1))
+            self.set_speed(self.motor_left_ID, (-(0.2-y)-0.1))
+            self.set_speed(self.motor_right_ID, -(y+0.1))
         elif x<0 and y<0: #forward right
-            self.set_pwm(self.motor_left_ID, y-0.1)
-            self.set_pwm(self.motor_right_ID, (-(0.2+y)-0.1))
+            self.set_speed(self.motor_left_ID, y-0.1)
+            self.set_speed(self.motor_right_ID, (-(0.2+y)-0.1))
         else:
             self.all_stop()
         
